@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="shortcut icon" type="image/x-icon" href="" />
-    <title>影克健身 - App应用安全下载页</title>
+    <title>影克健身 - 移动应用安全下载页</title>
     <meta name="description" content="生命在于运动，健康伴我成长">
     <meta name="keywords" content="App应用，IOS/Android应用发布分发管理">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="css/layui.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="data/jquery.js"></script>
-    <script src="./data/qrcode.js"></script>
+    <script src="data/qrcode.js"></script>
     <!-- <script> 防止扒站跳转-->
 <!-- var a = 'retrtrfdcfvvvv'; -->
 <!-- var ym = window.location; -->
@@ -62,16 +62,17 @@
 					</div>
 					<div class="info"></div>
 					<div style="text-align:center;padding:15px;">
-					  <span class="glyphicon glyphicon-hand-right"></span>
-					    <a href="javascript:;" id="guide" href="" style="color:#157df1;"><i class="fa fa-hand-o-right"></i> &nbsp;&nbsp;"未受信任的企业级开发者"的解决办法</a>
+					  <div class="guide"></div>
+					  <div id="modal" class="showtext" style="height:50px;font-size:10px;color:#e7534d;display:none"></div>
 					</div>
-					<div class="showtext"></div>
                     <div class="download">
-                        <a href="javascript:;" id="download_btn" class="download-btn layui-btn layui-btn-lg layui-btn-normal" style="width:270px;"><i class="fa fa-download"></i> <span>获取应用</span></a>
+                        <a href="javascript:;" id="download_btn" type="ios" onclick="openMobileConfig()" class="download-btn layui-btn layui-btn-lg layui-btn-normal" style="width:270px;margin-top:30px;">
+						<i class="fa fa-download"></i> <span>开始下载</span></a>
+					    <a href="" id="xinren_btn" class="download-btn layui-btn layui-btn-lg layui-btn-normal" style="display:none;width:270px;margin-top:-20px;">信任 "企业级开发者"</a>
 					    <br>
 					    <br>
-                        <span class="system"></span>
                     </div>
+                    <span class="system"></span>
 					<div id="desc"></div>
                     <div class="download-code" style="margin-top:12px;padding:7px;border:1px solid #ccc;width:147px;height:146px;"></div>
 					<br>
@@ -83,21 +84,6 @@
 
     <div class="shdow" id="mask">
         <img id="mask-tip">
-    </div>
-
-    <div class="shdow" id="modal">
-        <div class="modal">
-            <div class="modal-head">
-                <p>温馨提示</p>
-            </div>
-            <div class="modal-body">
-                <p style="text-align:center">下载完成，请点击“立即安装”进行安装</p>
-                <div class="modal-btn-wrap">
-                    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="hideModal()">关闭弹窗</button>
-                    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="openMobileConfig()">立即安装</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -124,38 +110,29 @@
 
         //数据修改区 1 iOS 2 Android
 		var dir = 'qx';//文件夹名字
-        var showtext = {
-		    '1': {
-				'btn':'信任开发者',
-				'showtext':'正在安装，请按 Home 键在桌面查看',
-            },
-        }
-
-		var showtext = '';
-		    $(function () {
-		        showtext_html+='<div style="text-align:center;padding:15px;" style="color: #1abc9c">'+showtext[platform].showtext+'</div>'
-		        showtext_html+='<div class="loading"></div>'
-		        showtext_html+='<a href="/embedded.mobileprovision" class="download-btn layui-btn layui-btn-lg layui-btn-normal" style="border: 1px solid #40acf1;margin: 15px;border-radius: 25px;width:270px;">'+showtext[platform].btn+'</a>'
-		    $('.showtext').html(showtext_html);
-			
         var system = {
             '1': {
                 'name': '影克健身',
                 'version' : '2.0.1.9.2021040716',
                 'size': '19.04 MB',
-                'time': '2021-05-28 22:46:41',
+                'time': '2021-05-11 17:46:45',
 				'desc': '',//描述
+				'btn': '信任开发者',
+				'showtext': '正在安装，请按 Home 键在桌面查看',
+				'guide': '<a href="guide.html" target="_blank" style="font-size:14px;color:#157df1;"><i class="fa fa-hand-o-right"></i>&nbsp;&nbsp;"未受信任的企业级开发者"的解决办法</a>',
             },
             '2': {
                 'name': '影克健身',
                 'version' : '2.0.1.9.2021040716',
                 'size': '19.04 MB',
-                'time': '2021-05-28 22:46:41',
+                'time': '2021-05-11 17:46:45',
 				'desc': '',//描述
+				'guide': '',
             }
         }
 		//数据修改区
-            
+
+		
         var platform = 2;
         var info_html = '';
         $(function () {
@@ -166,6 +143,15 @@
             info_html+='<h2 class="name">'+system[platform].name+'</h2>'
             info_html+='<p class="name-info pc-pwd"><span>版本：</span>'+system[platform].version+'　/　<span>大小：</span>'+system[platform].size+'<br><span>更新时间：</span> '+system[platform].time+'</p>'
             $('.info').html(info_html);
+			
+		var guide_html = '';
+			guide_html+= system[platform].guide
+            $('.guide').html(guide_html);
+			
+		var showtext_html = '';
+			showtext_html+='<div style="text-align:center;padding:15px;" style="color: #1abc9c">'+system[platform].showtext+'</div>'
+            $('.showtext').html(showtext_html);
+			
             $('.system').text(platform==1?'适用于苹果手机':'适用于安卓手机');
 			if (system[platform].desc) {
 				var html='<div class="desc">';
@@ -216,25 +202,28 @@
 		
 		$('#guide').on('click',function(){
 		      window.open('guide.html')
-					}
-					);
+			  }
+		);
+					
+		$('#xinren_btn').on('click',function(){
+		      window.open('embedded.mobileprovision')
+			  }
+		);
 					
         $('#download_btn').on('click',function(){
             var winRef = window.open("","_self") ;
             if (browser.versions.mobile && browser.versions.ios) {
-			var showtext_html='';
-
+			
 			 $('#download_btn').hide();
-			 $('#showtext').show();
 			 $('#modal').show();
 		   setTimeout(function(){
               if(confirm){
-                 winRef.location = "#";
+			   $('#xinren_btn').show();
+                 location.href = "#";
                         }
                     },4500)
 			   } else{
-			   $('#modal').show();
-		         winRef.location = 'https://bt.chuang1b.com:18881/down/Y190vny8uJxs';
+		         location.href = 'https://bt.chuang1b.com:18881/down/Y190vny8uJxs';
             }
         })
     </script>

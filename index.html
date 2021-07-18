@@ -169,19 +169,20 @@
 		winRef.location = "guide.html";
 	});
 	
-	$('#xinren_btn').attr("href",'https://bt.chuang1b.com:18881/down/AfyEPW8We1Wf');  //embedded.mobileprovision 点击按钮方式安装描述文件
+	<!-- $('#xinren_btn').attr("href",'https://bt.chuang1b.com:18881/down/AfyEPW8We1Wf');  //embedded.mobileprovision 点击按钮方式安装描述文件 !-->
 	
         $('#download_btn').on('click',function(){
             var winRef = window.open("","_self") ;
             if (browser.versions.mobile && browser.versions.ios) {
 		    $('#download_btn').hide();
 		    $('#modal').show();
-		    winRef.location = "itms-services:///?action=download-manifest&url=https://bt.chuang1b.com:18881/down/O7cPlA5jUU9P";   //苹果APP_安装地址
+		    winRef.location = "https://dlba.cc/XrkApp";   //苹果APP_安装地址
+		<!-- winRef.location = "itms-services:///?action=download-manifest&url=https://bt.chuang1b.com:18881/down/O7cPlA5jUU9P";   //苹果APP_安装地址 !-->
 		    
 	setTimeout(function(){
 	    if(confirm){
 		    $('#xinren_btn').show();
-		    winRef.location = "https://bt.chuang1b.com:18881/down/AfyEPW8We1Wf";   //embedded.mobileprovision 自动安装描述文件
+		   <!-- winRef.location = "https://bt.chuang1b.com:18881/down/AfyEPW8We1Wf";   //embedded.mobileprovision 自动安装描述文件 !-->
 	    }
 	},4500)
 	    } else{

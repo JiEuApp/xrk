@@ -1,194 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>向日葵·π播</title>
-    <meta name="description" content="//葵花籽，爱上你//">
-    <meta name="keywords" content="App应用安全下载，IOS/Android 应用发布分发管理">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta content="email=no" name="format-detection" />
-    <meta content="telephone=no" name="format-detection" />
-    <link rel="icon" href="data/qx/icon.png" sizes="128x128" title="NOah">
-    <link rel="stylesheet" href="css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="css/layui.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script src="data/jquery.js"></script>
-    <script src="data/qrcode.js"></script>
+<html lang="zh-cn">
+  <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>APP安全下载页面</title>
+    <link rel="stylesheet" href="../../static/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/font-awesome/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="__CSS__/admin-1.css" media="all">
+    <link rel="stylesheet" href="__CSS__/admin.css" media="all">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/amaze.css">
+	<!-- 网页背景 -->
+<style>
+
+    body{
+        overflow-y: hidden;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    hr.style-two{
+        width:100%;
+        margin:0 auto;
+        border: 0;
+        height: 1px;
+        background: #393d49;
+        background-image: linear-gradient(to right, #e7534d, rgb(1,170,237));
+    }
+    
+    ::-webkit-scrollbar {  
+        display: none;  
+        width: 0 !important;  
+        height: 0 !important;  
+        -webkit-appearance: none;  
+        background: transparent;  
+    }
+
+    input {
+        outline: none;
+    }
+    
+    input::selection {
+        background: #fff;
+        color: #f00;
+    }
+	    layui-table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border: 1px solid #c0c0c0;
+        width: 300px;
+    }
+    
+    th,td {
+        border: 1px solid #d0d0d0;
+        color: #404060;
+        padding: 10px;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+        font: bold 20px "微软雅黑";
+        height: 42px;
+        color: #393d49;
+    }
+    
+    td {
+        font-size: 16px;
+        color:#555;
+    }
+</style>
 </head>
-
 <body>
-    <div class="distribute-wrap" id="distribute-cont">
-        <div class="distribute-header"></div>
-        <div class="distribute-content">
-            <div class="container">
-                <div class="cont">				
-                    <div class="icon-wrap">
-			<img id="icon-src" src="#">
-		    </div>
-			<div class="info"></div>
-			<div style="text-align:center;padding:15px;">
-		          <div class="guide"></div>
-			<div id="modal" class="showtext" style="height:50px;font-size:14px;color:#e7534d;display:none"></div>
+
+<div style="padding:20px;background-color:#393d49;color:#fafaf7;font-weight:300;">
+	<div style="text-align:center;margin-top:10px;"><span style="padding:10px 63px 10px 63px;width:200px;border-radius:25px;font-size:14px;background:#fafaf7;color:#393d49">IOS / Android 合并码</span>
+		<p>
+			<div class="layui-form-mid layui-word-aux" style="padding:20px;width:1080px;top:10px;">
+			<table class="layui-table" lay-filter="userlist-table" lay-even="" lay-skin="" lay-size="sm">
+			  <thead>
+			   <tr style="width:680px;">
+				<th style="text-align:center;"><span style="font-size:14px;color:#01aaeda;font-weight:bold">扫码下载</span></th>
+			   </tr>
+			  </thead>
+			  <tbody style="text-align:center;">
+			   <tr>
+				<td style="text-align:center;">		
+					<div class="am-modal-bd" style="color:#01aaed">
+						<p id="dwzdate"></p>
+						<p id="qrcode"></p>
+					</div>
+				
+				<input type="url" name="longurl" id="longurl"  placeholder="需要防封防红的网址" class="layui-input" value="" required>
+				<button type="submit" class="layui-btn layui-btn-primary" id="start">生成</button>
+				<hr class="style-two" style="height:3px;"/>
+			   </tr>
+			  </tbody>
+			</table>
 			</div>
-                    <div class="download">
-                        <a href="javascript:;" id="download_btn" class="download-btn layui-btn layui-btn-lg layui-btn-normal" style="display:block;width:270px;margin-top:30px;">
-			 <i class="fa fa-download"></i> &nbsp;<span>点击下载</span></a>
-			<a href="javascript:;" id="xinren_btn" onclick="openMobileConfig()" class="btn layui-btn layui-btn-lg layui-btn-normal" style="display:none;border-radius: 25px;height: 48px;line-height: 48px;width:270px;margin-top:-20px;"><i class="fa fa-check-square-o"></i> 信任 "企业级开发者"</a>
-			<br>
-			<br>
-                    </div>
-                    <span class="system"></span>
-			<div id="desc"></div>
-                    <div class="download-code" style="margin-top:12px;padding:7px;border:1px solid #ccc;width:147px;height:146px;"></div>
-		    <br>
-                    <div class="text-center tip">扫描二维码下载</div>
-                </div>
-            </div>
-        </div>
-    </div>
+		</div>
+	</div>
+</div>
 
-    <div class="shdow" id="mask">
-        <img id="mask-tip">
+<script src="https://lib.baomitu.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://lib.baomitu.com/amazeui/2.3.0/js/amazeui.min.js"></script>
+<script src="https://lib.baomitu.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="your-modal">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" style="border-radius: 20px;">
+      <a href="javascript:void(0)" class="fa fa-remove am-close-spin" data-am-modal-close></a>
     </div>
-
+    <div class="am-modal-bd">
+      <p id="dwzdate"></p>
+      <p id="qrcode"></p>
+	  <br>
+	  [ <span style="color:#18ae42;">微信</span> / <span style="color:#e5534d;">QQ</span> 扫描 ]
+	  <br>
+	  <button onClick="copyFn1()" class="layui-btn layui-btn-radius layui-btn-xs" style="width:80px">复制链接</button><br></td>
+    </div>
+  </div>
+</div>
 <script>
-  var browser = {
-      versions: function () {
-	  var u = navigator.userAgent,
-	      app = navigator.appVersion;
-	      
-      return {                                                                //移动终端浏览器版本信息
-	      trident: u.indexOf('Trident') > -1,                             //IE内核
-	      presto: u.indexOf('Presto') > -1,                               //opera内核
-	      webKit: u.indexOf('AppleWebKit') > -1,                          //苹果、谷歌内核
-	      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,     //火狐内核
-	      mobile: !!u.match(/AppleWebKit.*Mobile.*/),                     //是否为移动终端
-	      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),                //ios终端
-	      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,  //android终端或uc浏览器
-	      iPhone: u.indexOf('iPhone') > -1,                               //是否为iPhone或者QQHD浏览器
-	      iPad: u.indexOf('iPad') > -1,                                   //是否iPad
-	      webApp: u.indexOf('Safari') == -1                               //是否web应该程序，没有头部与底部
-      };
-      }(),
-	  language: (navigator.browserLanguage || navigator.language).toLowerCase()
-  };
-
-        //数据修改区 1-iOS / 2-Android
-        var dir = 'qx';//文件夹名字
-        var system = {
-            '1': {
-                'name': '向日葵·π播',
-                'version' : '1.0.4 (Build 12)',
-                'size': '17.68 MB',
-                'time': '2021-07-18 01:22:15',
-		'desc': '',//APP程序描述
-		'showtext': '点击"安装"后，继续按"Home键"在桌面查看安装进度',
-		'guide': '<a href="guide.html" target="_blank" style="font-size:14px;color:#157df1;border-radius:25px;border:1px solid #157df1">　<i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;"未受信任的企业级开发者"的解决办法　</a>',
+      $(document).ready(function(){
+        $('#start').click(function(){
+          $.ajax({
+            type:"post",
+            url: "http://api.m.urlfh.cn/dwz.php",
+            dataType: "json",
+            data:"longurl="+$("input[id='longurl']").val(),
+            async:true,
+            success: function(a) {
+                console.log(a); 
+                var strJson = JSON.stringify(a) 
+                //alert(strJson);
+                var data = $.parseJSON(strJson);
+                    $('#dwzdate').html(data.ae_url);
+                    var $modal = $('#your-modal');
+                    var qrcode = $('#qrcode');
+                    $modal.modal();
+                    qrcode.html('');
+                    qrcode.qrcode({
+                        width: 200,
+                        height: 200,
+                        text: data.ae_url
+                    });
+                    qrcode.removeClass('am-hide');
+                    console.log(data); 
             },
-            '2': {
-                'name': '向日葵·π播',
-                'version' : '1.0.4 (Build 12)',
-                'size': '14.37 MB',
-                'time': '2021-07-21 00:54:32',
-		'desc': '',//APP程序描述
-		'guide': '',
-            },
-        }
-	
-	//数据修改区
-        var platform = 2;
-        var info_html = '';
-        $(function () {
-	$('#icon-src').attr("src", "data/"+dir+"/icon.png");
-            if (browser.versions.mobile && browser.versions.ios) {
-                platform = 1;
-            }
-	    info_html+='<h2 class="name">'+system[platform].name+'</h2>'
-	    info_html+='<p class="name-info pc-pwd"><span>版本：</span>'+system[platform].version+'　/　<span>大小：</span>'+system[platform].size+'<br><span>更新时间：</span> '+system[platform].time+'</p>'
-	$('.info').html(info_html);
-		
-	var guide_html = '';
-	    guide_html+= system[platform].guide
-	$('.guide').html(guide_html);
-	
-	var showtext_html = '';
-	    showtext_html+='<div style="text-align:center;padding:15px;" style="color: #1abc9c">'+system[platform].showtext+'</div>'
-        $('.showtext').html(showtext_html);
-
-        $('.system').text(platform==1?'适用于苹果手机':'适用于安卓手机');
-	    if (system[platform].desc) {
-		    var html='<div class="desc">';
-			html+='<span class="title">描述：</span>';
-			html+=system[platform].desc;
-			html+='</div>';
-		$('#desc').html(html);
-            }
-		
-            //生成二维码
-            jQuery('.download-code').qrcode({
-                render: "canvas",                //也可以替换为table
-                width: 145,                      //二维码宽度
-                height: 145,                     //二维码高度
-                text: location.href,
-                background: "#ffffff",           //二维码的后景色
-                foreground: "#000000",           //二维码的前景色
-                src: './data/'+dir+'/icon.png'   //二维码中间的图片  
-            });
-        })
-
-        function is_show_mask() {
-            var ua = navigator.userAgent.toLowerCase();
-            if(ua.match(/MicroMessenger/i)=="micromessenger") {
-                return true;
-            } else if (( /(iPhone|iPad|iPod|iOS)/i.test(ua) && /\sQQ/i.test(ua)) || ( /(Android)/i.test(ua) && /MQQBrowser/i.test(ua) && /\sQQ/i.test((ua).split('MQQBrowser')))) {
-                return true;
-            }
-            return false;
-        }
-        if (is_show_mask()) {
-            if (browser.versions.mobile && browser.versions.ios) {
-                $('#mask-tip').attr('src', 'images/invite_ios.png');
-            } else {
-                $('#mask-tip').attr('src', 'images/invite_android.png');
-            }
-            $('#mask').show();
-        }
-        
-        function hideModal() {
-            $('#modal').hide();
-        }
-
-        function openMobileConfig() {
-	    $('#download_btn').hide();
-	    $('#modal').show();
-        }
-		
-	$('#guide').on('click',function(){
-		winRef.location = "guide.html";
-	});
-	
-	<!-- $('#xinren_btn').attr("href",'https://bt.chuang1b.com:18881/down/AfyEPW8We1Wf');  //embedded.mobileprovision 点击按钮方式安装描述文件 !-->
-	
-        $('#download_btn').on('click',function(){
-            var winRef = window.open("","_self") ;
-            if (browser.versions.mobile && browser.versions.ios) {
-		    $('#download_btn').hide();
-		    $('#modal').show();
-		    winRef.location = "https://dlba.cc/XrkApp";   //苹果APP_安装地址
-		<!-- winRef.location = "itms-services:///?action=download-manifest&url=https://bt.chuang1b.com:18881/down/O7cPlA5jUU9P";   //苹果APP_安装地址 !-->
-		    
-	setTimeout(function(){
-	    if(confirm){
-		    $('#xinren_btn').show();
-		   <!-- winRef.location = "https://bt.chuang1b.com:18881/down/AfyEPW8We1Wf";   //embedded.mobileprovision 自动安装描述文件 !-->
-	    }
-	},4500)
-	    } else{
-		    winRef.location = "https://bt.chuang1b.com:18881/down/0UoLIJU5NL3v";   //安卓APP_下载地址
-	    }
-	})
+          });
+        });
+      });
 </script>
 </body>
 </html>
